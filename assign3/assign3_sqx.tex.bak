@@ -1,0 +1,160 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[pdftex]{graphicx}
+%\usepackage{cite}
+\usepackage{indentfirst}
+\setlength{\parindent}{1em}
+\usepackage{enumerate}
+\usepackage{geometry}
+\geometry{left=1in,right=1in,top=1in,bottom=1in}
+%\usepackage{times}
+%\usepackage{mathptmx}
+%\usepackage{listings}
+%\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{Lyapunov based Nonlinear Control - Assignment3}
+\author{Sun Qinxuan}
+
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+
+\indent Find the equilibrium point(s) of the following friction system
+$$\dot{v}+2av|v|+bv=c,a>0,b>0,c>0$$
+and analyze the corresponding stability.
+
+\subsection*{Solution 1}
+
+\indent Rewrite the system equation as follows
+\begin{equation}
+\dot{v}=-2av|v|-bv+c.
+\end{equation}
+Solve (\ref{eq1}) to get the equilibrium points.
+\begin{equation}
+-2av|v|-bv+c=0 .
+\label{eq1}
+\end{equation}
+Considering the absolute value of $v$, (\ref{eq1}) turns out to be in the form
+\begin{equation}
+\left\{
+    \begin{aligned}
+    &-2av^2-bv+c=0 &v\ge 0\\
+    &2av^2-bv+c=0 &v<0
+    \end{aligned}
+\right. .
+\label{eq2}
+\end{equation}
+Solve (\ref{eq2}) and we know that the system has only one equilibrium point
+\begin{equation}
+v_s=\frac{b-\sqrt{b^2+8ac}}{-4a}.
+\label{vs}
+\end{equation}
+
+\indent To analyze the stability on this equilibrium point, we first define the translation
+\begin{equation}
+x\triangleq v-v_s,
+\end{equation}
+then for the system $\dot{x}=-a(x+v_s)|x+v_s|-b(x+v_s)+c$, it has one equilibrium point $x_s=0$. Likewise, the system equation can be rewritten as
+\begin{equation}
+\dot{x}=
+\left\{
+    \begin{aligned}
+    &-2a(x+v_s)^2-b(x+v_s)+c &x\ge -v_s\\
+    &2a(x+v_s)^2-b(x+v_s)+c &x<-v_s
+    \end{aligned}
+\right. .
+\label{eq3}
+\end{equation}
+
+\indent Choose the Lyapunov function
+\begin{equation}
+V(x)=\frac{1}{2}x^2.
+\end{equation}
+Obviously, $V(x)$ is positive definite and goes to infinity when $x\rightarrow\infty$. Then
+\begin{equation}
+\dot{V}(x)=x\dot{x}=
+\left\{
+    \begin{aligned}
+    &-2ax(x+v_s)^2-bx(x+v_s)+cx &x\ge -v_s\\
+    &2ax(x+v_s)^2-bx(x+v_s)+cx &x<-v_s
+    \end{aligned}
+\right. .
+\label{vdot}
+\end{equation}
+
+\indent We can tell from (\ref{vdot}) that when $x<-v_s$, each item of $\dot{V}(x)$ is negative. So $\dot{V}(x)$ is negative definite when $x<-v_s$. As for the case of $x\ge -v_s$, known that $-2av_s^2-bv_s+c=0$, $\dot{V}(x)$ can be written as follows
+\begin{equation}
+\dot{V}(x)=-x^2[2a(x+2v_s)+b], x\ge -v_s.
+\label{vdot2}
+\end{equation}
+It can be seen from (\ref{vdot2}) that when $x\ge -v_s$, $\dot{V}(x)\le 0$ holds true. And $\dot{V}(x)=0$ if and only if $x=0$. So $\dot{V}(x)$ is also negative definite. Therefore, the equilibrium point $v=v_s$ is globally asymptotically stable.
+
+\section*{Problem 2}
+
+\indent For the following nonlinear system
+$$\dot{x}=-kx+\sin^3(x)+x\cos^2(x)$$
+where $k>2$ denotes a positive constant. Find its equilibrium point and use Lyapunov method to analyze its stability (get a conclusion as strong as possible).
+
+\begin{itemize}
+    \item Show that there is {\bf only} one equilibrium point at
+        $$x=0.$$
+    \item Utilize the Lyapunov method to analyze its stability around origin.
+\end{itemize}
+
+\subsection*{Solution 2}
+
+\subsubsection*{(1) Show that there is {\bf only} one equilibrium point at $x=0$.}
+
+\indent It's obvious that when $x=0$, $\dot{x}=0$. So $x=0$ is one of the system's equilibrium points.
+
+\indent In what follows, we'll prove that $x=0$ is the only equilibrium point.
+
+\indent When $x>0$, the system equation can be rewritten as
+\begin{equation}
+\dot{x}=(1-k)x+\sin^2(x)(\sin(x)-x)
+\end{equation}
+%where
+%\begin{equation}
+%\begin{aligned}
+%&f_1(x)=(1-k)x\\
+%&f_2(x)=\sin^2(x)(\sin(x)-x).
+%\end{aligned}
+%\end{equation}
+Let $f(x)=\sin(x)-x$. Then we know that $f(0)=0$ and when $x>0$, $\frac{{\rm d}f(x)}{{\rm d}x}=\cos(x)-1<0$. So $f(x)<0$ when $x>0$. And also $(1-k)x<0, \sin^2(x)>0$. As a result, $\dot{x}<0$ holds true when $x>0$. Likewise, when $x<0$ we can deduce that $\dot{x}>0$.
+
+\indent From all above, we can conclude that 
+\begin{equation}
+\dot{x}
+\left\{
+    \begin{aligned}
+    &>0 &x<0\\
+    &=0 &x=0\\
+    &<0 &x>0
+    \end{aligned}
+\right. .
+\label{xdot}
+\end{equation}
+So the system has only one equilibrium point $x=0$.
+
+\subsubsection*{(2) Utilize the Lyapunov method to analyze its stability around origin.}
+
+\indent Choose the Lyapunov function
+\begin{equation}
+V(x)=\frac{1}{2}x^2.
+\end{equation}
+Obviously, $V(x)$ is positive definite and goes to infinity when $x\rightarrow\infty$. Then
+\begin{equation}
+\dot{V}(x)=x\dot{x}.
+\end{equation}
+As shown from (\ref{xdot}), $\dot{V}(x)$ satisfied $\dot{V}(x)\le 0$. And $\dot{V}(x)=0$ holds true if and only if $x=0$. So $\dot{V}(x)$ is negative definite. Therefore, the equilibrium point $x=0$ is globally asymptotically stable.
+
+\indent Furthermore, 
+\begin{equation}
+\dot{V}(x)=x\dot{x}=(-k+1)x^2+x\sin^2(x)(sin(x)-x)
+\end{equation}
+
+
+\end{document} 
